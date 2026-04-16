@@ -3,485 +3,170 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questions de compréhension – La Pollution des Océans</title>
+<title>Examen – La Pollution des Océans</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --deep: #0a1628;
-    --ocean: #0d3b6e;
-    --mid: #1565c0;
-    --surf: #1e88e5;
-    --foam: #e3f2fd;
-    --coral: #ff6b6b;
-    --sand: #fff8e1;
-    --green: #43a047;
-    --gold: #ffd54f;
-    --white: #ffffff;
+    --deep:#0a1628; --ocean:#0d3b6e; --mid:#1565c0; --surf:#1e88e5;
+    --coral:#ff6b6b; --green:#43a047; --gold:#ffd54f; --white:#ffffff;
+    --purple:#7c4dff; --orange:#ff8f00;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--deep);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  /* Animated ocean background */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Nunito',sans-serif; background:var(--deep); min-height:100vh; overflow-x:hidden; }
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: 
-      radial-gradient(ellipse at 20% 50%, rgba(21, 101, 192, 0.4) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 20%, rgba(13, 59, 110, 0.6) 0%, transparent 50%),
-      linear-gradient(180deg, #0a1628 0%, #0d3b6e 50%, #0a1628 100%);
-    z-index: 0;
+    content:''; position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse at 20% 50%,rgba(21,101,192,.4) 0%,transparent 60%),
+      radial-gradient(ellipse at 80% 20%,rgba(13,59,110,.6) 0%,transparent 50%),
+      linear-gradient(180deg,#0a1628 0%,#0d3b6e 50%,#0a1628 100%);
   }
+  .bubbles { position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden; }
+  .bubble  { position:absolute;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);animation:rise linear infinite;bottom:-60px; }
+  .bubble:nth-child(1){width:14px;height:14px;left:10%;animation-duration:9s}
+  .bubble:nth-child(2){width:22px;height:22px;left:25%;animation-duration:13s;animation-delay:2s}
+  .bubble:nth-child(3){width:8px;height:8px;left:40%;animation-duration:8s;animation-delay:5s}
+  .bubble:nth-child(4){width:18px;height:18px;left:55%;animation-duration:11s;animation-delay:1s}
+  .bubble:nth-child(5){width:30px;height:30px;left:70%;animation-duration:15s;animation-delay:3s}
+  .bubble:nth-child(6){width:12px;height:12px;left:85%;animation-duration:10s;animation-delay:7s}
+  .bubble:nth-child(7){width:20px;height:20px;left:5%;animation-duration:12s;animation-delay:4s}
+  .bubble:nth-child(8){width:10px;height:10px;left:90%;animation-duration:9s;animation-delay:6s}
+  @keyframes rise{0%{transform:translateY(0);opacity:0}10%{opacity:1}90%{opacity:.6}100%{transform:translateY(-100vh) translateX(20px);opacity:0}}
+  .fish-deco{position:fixed;opacity:.1;animation:swim linear infinite;z-index:2;pointer-events:none}
+  .fish-deco.f1{font-size:1.8rem;animation-duration:22s;bottom:15%}
+  .fish-deco.f2{font-size:1.2rem;animation-duration:30s;animation-delay:8s;bottom:35%}
+  .fish-deco.f3{font-size:1rem;animation-duration:18s;animation-delay:4s;bottom:60%}
+  @keyframes swim{0%{transform:translateX(-80px) scaleX(1);opacity:0}5%{opacity:.1}45%{transform:translateX(50vw) scaleX(1);opacity:.1}50%{transform:translateX(55vw) scaleX(-1);opacity:.1}95%{opacity:.1}100%{transform:translateX(-80px) scaleX(-1);opacity:0}}
 
-  /* Bubbles */
-  .bubbles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-  .bubble {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    animation: rise linear infinite;
-    bottom: -60px;
-  }
-  .bubble:nth-child(1)  { width:14px; height:14px; left:10%; animation-duration:9s; animation-delay:0s; }
-  .bubble:nth-child(2)  { width:22px; height:22px; left:25%; animation-duration:13s; animation-delay:2s; }
-  .bubble:nth-child(3)  { width:8px;  height:8px;  left:40%; animation-duration:8s;  animation-delay:5s; }
-  .bubble:nth-child(4)  { width:18px; height:18px; left:55%; animation-duration:11s; animation-delay:1s; }
-  .bubble:nth-child(5)  { width:30px; height:30px; left:70%; animation-duration:15s; animation-delay:3s; }
-  .bubble:nth-child(6)  { width:12px; height:12px; left:85%; animation-duration:10s; animation-delay:7s; }
-  .bubble:nth-child(7)  { width:20px; height:20px; left:5%;  animation-duration:12s; animation-delay:4s; }
-  .bubble:nth-child(8)  { width:10px; height:10px; left:90%; animation-duration:9s;  animation-delay:6s; }
-
-  @keyframes rise {
-    0%   { transform: translateY(0) translateX(0); opacity: 0; }
-    10%  { opacity: 1; }
-    90%  { opacity: 0.6; }
-    100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
-  }
-
-  /* Main container */
-  .container {
-    position: relative;
-    z-index: 10;
-    max-width: 820px;
-    margin: 0 auto;
-    padding: 40px 20px 60px;
-  }
+  .container{position:relative;z-index:10;max-width:820px;margin:0 auto;padding:40px 20px 60px}
 
   /* Header */
-  .header {
-    text-align: center;
-    margin-bottom: 48px;
-    animation: fadeDown 0.8s ease both;
-  }
-  .header .badge {
-    display: inline-block;
-    background: rgba(30, 136, 229, 0.25);
-    border: 1px solid rgba(30, 136, 229, 0.5);
-    color: #90caf9;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-bottom: 16px;
-  }
-  .header h1 {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
-    font-weight: 800;
-    color: var(--white);
-    line-height: 1.15;
-    text-shadow: 0 2px 20px rgba(30,136,229,0.5);
-  }
-  .header h1 span { color: var(--gold); }
-  .header p {
-    margin-top: 12px;
-    color: #90caf9;
-    font-size: 1rem;
-    font-weight: 600;
-  }
+  .header{text-align:center;margin-bottom:36px;animation:fadeDown .8s ease both}
+  .header .badge{display:inline-block;background:rgba(30,136,229,.25);border:1px solid rgba(30,136,229,.5);color:#90caf9;font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:16px}
+  .header h1{font-family:'Baloo 2',cursive;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;color:#fff;line-height:1.15;text-shadow:0 2px 20px rgba(30,136,229,.5)}
+  .header h1 span{color:var(--gold)}
+  .header p{margin-top:12px;color:#90caf9;font-size:1rem;font-weight:600}
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-24px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  /* Config API card (enseignant) */
+  .config-card{background:rgba(124,77,255,.08);border:1.5px solid rgba(124,77,255,.35);border-radius:20px;padding:20px 28px;margin-bottom:24px;animation:fadeUp .4s ease both}
+  .config-card .cc-title{font-family:'Baloo 2',cursive;font-size:.95rem;font-weight:800;color:#ce93d8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+  .config-card .cc-sub{font-size:.82rem;color:#b39ddb;font-weight:600;margin-bottom:12px}
+  .config-card .cc-sub a{color:#ce93d8}
+  .apikey-wrap{display:flex;gap:10px;align-items:center}
+  .apikey-input{flex:1;background:rgba(255,255,255,.07);border:1.5px solid rgba(124,77,255,.3);border-radius:10px;padding:10px 14px;color:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;outline:none;transition:border-color .2s;letter-spacing:.04em}
+  .apikey-input::placeholder{color:rgba(179,157,219,.4);letter-spacing:0}
+  .apikey-input:focus{border-color:#ce93d8;background:rgba(124,77,255,.08)}
+  .toggle-key-btn{background:rgba(124,77,255,.2);border:1px solid rgba(124,77,255,.3);color:#ce93d8;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:.85rem;font-weight:700;white-space:nowrap;transition:all .2s}
+  .toggle-key-btn:hover{background:rgba(124,77,255,.3)}
+  .key-status{margin-top:8px;font-size:.8rem;font-weight:700;display:none}
+  .key-status.ok{display:block;color:#a5d6a7}
+  .key-status.err{display:block;color:#ffab91}
 
-  /* Section labels */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 40px 0 16px;
-    animation: fadeUp 0.6s ease both;
-  }
-  .section-label .icon {
-    font-size: 1.4rem;
-    background: rgba(255,255,255,0.08);
-    width: 42px; height: 42px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .section-label h2 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: var(--gold);
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
+  /* Student card */
+  .student-card{background:rgba(255,213,79,.08);border:1.5px solid rgba(255,213,79,.3);border-radius:20px;padding:24px 28px;margin-bottom:36px;animation:fadeUp .5s ease both}
+  .student-card .sc-title{font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+  .student-fields{display:flex;gap:14px;flex-wrap:wrap}
+  .field-group{flex:1;min-width:200px}
+  .field-group label{display:block;font-size:.75rem;font-weight:700;color:#90caf9;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .field-input{width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;padding:11px 14px;color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;outline:none;transition:border-color .2s,background .2s}
+  .field-input::placeholder{color:rgba(144,202,249,.35)}
+  .field-input:focus{border-color:var(--gold);background:rgba(255,213,79,.06)}
+
+  /* Texte descriptif */
+  .texte-section{background:rgba(255,255,255,.05);border:1px solid rgba(30,136,229,.25);border-radius:24px;padding:32px 36px;margin-bottom:48px;animation:fadeUp .7s ease both;position:relative;overflow:hidden}
+  .texte-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--surf),#42a5f5,var(--gold),var(--surf));background-size:200%;animation:shimmer 3s linear infinite}
+  @keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+  .texte-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(30,136,229,.2);border:1px solid rgba(30,136,229,.4);color:#90caf9;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}
+  .texte-section h2{font-family:'Baloo 2',cursive;font-size:clamp(1.3rem,4vw,1.9rem);font-weight:800;color:#fff;margin-bottom:20px;text-shadow:0 2px 12px rgba(30,136,229,.4)}
+  .texte-section h2 span{color:var(--gold)}
+  .texte-para{color:#cde6ff;font-size:1rem;font-weight:600;line-height:1.85;margin-bottom:16px}
+  .texte-para strong{color:var(--gold);font-weight:800}
+  .texte-highlight{background:rgba(30,136,229,.12);border-left:3px solid var(--surf);border-radius:0 10px 10px 0;padding:14px 18px;margin:20px 0;color:#e3f2fd;font-size:1rem;font-weight:700;line-height:1.7;font-style:italic}
+
+  /* Section label */
+  .section-label{display:flex;align-items:center;gap:10px;margin:40px 0 16px;animation:fadeUp .6s ease both}
+  .section-label .icon{font-size:1.4rem;background:rgba(255,255,255,.08);width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .section-label h2{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:var(--gold);letter-spacing:.03em;text-transform:uppercase}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);margin:8px 0 0}
 
   /* Question card */
-  .question-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 24px 28px;
-    margin-bottom: 16px;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    animation: fadeUp 0.5s ease both;
-    position: relative;
-    overflow: hidden;
-  }
-  .question-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 4px;
-    background: var(--surf);
-    border-radius: 4px 0 0 4px;
-  }
-  .question-card:hover {
-    transform: translateY(-2px);
-    background: rgba(255,255,255,0.08);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-  .question-card.correct::before { background: var(--green); }
-  .question-card.wrong::before   { background: var(--coral); }
+  .question-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px);border-radius:20px;padding:24px 28px;margin-bottom:16px;transition:transform .2s,box-shadow .2s,background .2s;animation:fadeUp .5s ease both;position:relative;overflow:hidden}
+  .question-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--surf);border-radius:4px 0 0 4px}
+  .question-card:hover:not(.locked){transform:translateY(-2px);background:rgba(255,255,255,.08);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+  .q-number{font-family:'Baloo 2',cursive;font-size:.75rem;font-weight:800;color:#64b5f6;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .q-text{font-size:1.05rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:16px}
 
-  .q-number {
-    font-family: 'Baloo 2', cursive;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: #64b5f6;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .q-text {
-    font-family: 'Nunito', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.5;
-    margin-bottom: 16px;
-  }
+  /* Options */
+  .options{display:flex;flex-direction:column;gap:8px}
+  .option-btn{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 16px;cursor:pointer;transition:all .2s;color:#cce4ff;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:600;text-align:left;width:100%}
+  .option-btn:hover:not(:disabled){background:rgba(30,136,229,.2);border-color:var(--surf);color:#fff}
+  .option-btn.selected{background:rgba(30,136,229,.25);border-color:var(--surf);color:#fff}
+  .option-btn.correct-answer{background:rgba(67,160,71,.2);border-color:var(--green);color:#a5d6a7}
+  .option-btn.wrong-answer{background:rgba(255,107,107,.15);border-color:var(--coral);color:#ffab91}
+  .option-btn .letter{width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;flex-shrink:0;transition:background .2s}
+  .option-btn.selected .letter{background:rgba(30,136,229,.4);color:#bbdefb}
+  .option-btn.correct-answer .letter{background:rgba(67,160,71,.4);color:#c8e6c9}
+  .option-btn.wrong-answer .letter{background:rgba(255,107,107,.3);color:#ffccbc}
 
-  /* MCQ options */
-  .options { display: flex; flex-direction: column; gap: 8px; }
-  .option-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255,255,255,0.05);
-    border: 1.5px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
-    padding: 10px 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: #cce4ff;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-align: left;
-    width: 100%;
-  }
-  .option-btn:hover:not(:disabled) {
-    background: rgba(30,136,229,0.2);
-    border-color: var(--surf);
-    color: white;
-  }
-  .option-btn.correct-answer {
-    background: rgba(67, 160, 71, 0.2);
-    border-color: var(--green);
-    color: #a5d6a7;
-  }
-  .option-btn.wrong-answer {
-    background: rgba(255, 107, 107, 0.15);
-    border-color: var(--coral);
-    color: #ffab91;
-  }
-  .option-btn .letter {
-    width: 26px; height: 26px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.1);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem;
-    font-weight: 800;
-    flex-shrink: 0;
-    transition: background 0.2s;
-  }
-  .option-btn.correct-answer .letter { background: rgba(67,160,71,0.4); color: #c8e6c9; }
-  .option-btn.wrong-answer   .letter { background: rgba(255,107,107,0.3); color: #ffccbc; }
+  /* Textarea */
+  .answer-area{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px;margin-top:4px}
+  .answer-label{font-size:.72rem;font-weight:700;color:#64b5f6;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .answer-textarea{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 14px;color:#e3f2fd;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:600;resize:vertical;min-height:90px;outline:none;transition:border-color .2s,background .2s;line-height:1.6}
+  .answer-textarea::placeholder{color:rgba(144,202,249,.35)}
+  .answer-textarea:focus{border-color:var(--surf);background:rgba(30,136,229,.08)}
+  .answer-textarea:disabled{opacity:.7;cursor:not-allowed}
 
-  /* Text answer area */
-  .answer-area {
-    background: rgba(255,255,255,0.04);
-    border: 1.5px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-top: 4px;
-  }
-  .answer-area .answer-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #64b5f6;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .answer-textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.05);
-    border: 1.5px solid rgba(255,255,255,0.15);
-    border-radius: 10px;
-    padding: 12px 14px;
-    color: #e3f2fd;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    resize: vertical;
-    min-height: 90px;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
-    line-height: 1.6;
-  }
-  .answer-textarea::placeholder { color: rgba(144,202,249,0.35); }
-  .answer-textarea:focus {
-    border-color: var(--surf);
-    background: rgba(30,136,229,0.08);
-  }
+  /* Bloc correction IA */
+  .ai-correction{display:none;margin-top:14px;border-radius:14px;overflow:hidden;animation:fadeUp .4s ease}
+  .ai-correction.visible{display:block}
+  .ai-header{display:flex;align-items:center;gap:10px;padding:10px 16px;font-family:'Baloo 2',cursive;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .ai-body{padding:12px 16px;font-size:.93rem;font-weight:600;line-height:1.6}
+  .ai-body .note-badge{display:inline-block;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;padding:2px 12px;border-radius:8px;margin-bottom:8px}
 
-  /* Reveal answer button */
-  .reveal-btn {
-    margin-top: 12px;
-    background: none;
-    border: 1px solid rgba(100,181,246,0.3);
-    color: #64b5f6;
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .reveal-btn:hover {
-    background: rgba(100,181,246,0.1);
-    border-color: #90caf9;
-    color: #90caf9;
-  }
-  .model-answer {
-    display: none;
-    margin-top: 12px;
-    background: rgba(67,160,71,0.12);
-    border: 1px solid rgba(67,160,71,0.3);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 0.9rem;
-    color: #a5d6a7;
-    font-weight: 600;
-    line-height: 1.5;
-  }
-  .model-answer.visible { display: block; animation: fadeUp 0.3s ease; }
-  .model-answer strong { color: #c8e6c9; }
+  .ai-correction.note-2 .ai-header{background:rgba(67,160,71,.25);color:#a5d6a7}
+  .ai-correction.note-2 .ai-body{background:rgba(67,160,71,.1);color:#c8e6c9}
+  .ai-correction.note-2 .note-badge{background:rgba(67,160,71,.3);color:#a5d6a7}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  .ai-correction.note-1 .ai-header{background:rgba(255,143,0,.25);color:#ffcc80}
+  .ai-correction.note-1 .ai-body{background:rgba(255,143,0,.1);color:#ffe0b2}
+  .ai-correction.note-1 .note-badge{background:rgba(255,143,0,.3);color:#ffcc80}
 
-  /* Score box */
-  .score-box {
-    text-align: center;
-    margin-top: 40px;
-    padding: 28px 24px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,213,79,0.3);
-    border-radius: 24px;
-    animation: fadeUp 0.6s ease both;
-    display: none;
-  }
-  .score-box.visible { display: block; }
-  .score-box .score-emoji { font-size: 3rem; margin-bottom: 8px; }
-  .score-box h3 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--gold);
-    margin-bottom: 4px;
-  }
-  .score-box p { color: #90caf9; font-weight: 600; font-size: 1rem; }
+  .ai-correction.note-0 .ai-header{background:rgba(255,107,107,.2);color:#ffab91}
+  .ai-correction.note-0 .ai-body{background:rgba(255,107,107,.08);color:#ffccbc}
+  .ai-correction.note-0 .note-badge{background:rgba(255,107,107,.25);color:#ffab91}
 
-  /* Check MCQ btn */
-  .check-btn {
-    margin-top: 16px;
-    background: linear-gradient(135deg, #1565c0, #1e88e5);
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    border-radius: 12px;
-    font-family: 'Baloo 2', cursive;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 16px rgba(21,101,192,0.4);
-  }
-  .check-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(21,101,192,0.5); }
-  .check-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .ai-loading{display:none;margin-top:12px;text-align:center;color:#90caf9;font-weight:700;font-size:.9rem;animation:fadeUp .3s ease}
+  .ai-loading.visible{display:flex;align-items:center;justify-content:center;gap:8px}
+  .spinner{width:18px;height:18px;border:2px solid rgba(144,202,249,.3);border-top-color:#90caf9;border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* Final check btn */
-  .final-btn {
-    display: block;
-    margin: 32px auto 0;
-    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-    border: none;
-    color: white;
-    padding: 14px 36px;
-    border-radius: 16px;
-    font-family: 'Baloo 2', cursive;
-    font-size: 1.1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 20px rgba(255,107,107,0.4);
-    letter-spacing: 0.03em;
-  }
-  .final-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,107,0.5); }
+  /* VF explanation */
+  .vf-exp{display:none;margin-top:10px;background:rgba(67,160,71,.12);border:1px solid rgba(67,160,71,.3);border-radius:10px;padding:12px 14px;font-size:.9rem;color:#a5d6a7;font-weight:600;line-height:1.5}
+  .vf-exp.visible{display:block;animation:fadeUp .3s ease}
 
-  /* Divider */
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    margin: 8px 0 0;
-  }
+  /* Submit zone */
+  .submit-zone{margin-top:40px;text-align:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,213,79,.2);border-radius:24px;padding:32px 24px;animation:fadeUp .6s ease both}
+  .submit-zone p{color:#90caf9;font-weight:600;font-size:.95rem;margin-bottom:20px}
+  .submit-btn{background:linear-gradient(135deg,#43a047,#66bb6a);border:none;color:#fff;padding:16px 48px;border-radius:16px;font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(67,160,71,.4);letter-spacing:.03em}
+  .submit-btn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 8px 28px rgba(67,160,71,.5)}
+  .submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .error-msg{display:none;margin-top:14px;background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.3);border-radius:10px;padding:12px 16px;color:#ffab91;font-weight:700;font-size:.9rem}
+  .error-msg.visible{display:block}
 
-  /* Stagger animations */
-  .question-card:nth-child(1) { animation-delay: 0.1s; }
-  .question-card:nth-child(2) { animation-delay: 0.15s; }
-  .question-card:nth-child(3) { animation-delay: 0.2s; }
-  .question-card:nth-child(4) { animation-delay: 0.25s; }
-  .question-card:nth-child(5) { animation-delay: 0.3s; }
-  .question-card:nth-child(6) { animation-delay: 0.35s; }
-
-  /* Fish decoration */
-  .fish-deco {
-    position: fixed;
-    font-size: 1.8rem;
-    opacity: 0.12;
-    animation: swim linear infinite;
-    bottom: 15%;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .fish-deco.f1 { animation-duration: 22s; animation-delay: 0s; }
-  .fish-deco.f2 { animation-duration: 30s; animation-delay: 8s; bottom: 35%; font-size: 1.2rem; }
-  .fish-deco.f3 { animation-duration: 18s; animation-delay: 4s; bottom: 60%; font-size: 1rem; }
-
-  @keyframes swim {
-    0%   { transform: translateX(-80px) scaleX(1); opacity: 0; }
-    5%   { opacity: 0.12; }
-    45%  { transform: translateX(50vw) scaleX(1); opacity: 0.12; }
-    50%  { transform: translateX(55vw) scaleX(-1); opacity: 0.12; }
-    95%  { opacity: 0.12; }
-    100% { transform: translateX(-80px) scaleX(-1); opacity: 0; }
-  }
-
-  /* ---- Texte descriptif ---- */
-  .texte-section {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(30,136,229,0.25);
-    border-radius: 24px;
-    padding: 32px 36px;
-    margin-bottom: 48px;
-    animation: fadeUp 0.7s ease both;
-    position: relative;
-    overflow: hidden;
-  }
-  .texte-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--surf), #42a5f5, var(--gold), var(--surf));
-    background-size: 200% 100%;
-    animation: shimmer 3s linear infinite;
-  }
-  @keyframes shimmer {
-    0%   { background-position: 0% 0%; }
-    100% { background-position: 200% 0%; }
-  }
-  .texte-section .texte-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(30,136,229,0.2);
-    border: 1px solid rgba(30,136,229,0.4);
-    color: #90caf9;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-  }
-  .texte-section h2 {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(1.3rem, 4vw, 1.9rem);
-    font-weight: 800;
-    color: var(--white);
-    margin-bottom: 20px;
-    text-shadow: 0 2px 12px rgba(30,136,229,0.4);
-  }
-  .texte-section h2 span { color: var(--gold); }
-  .texte-para {
-    color: #cde6ff;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.85;
-    margin-bottom: 16px;
-  }
-  .texte-para:last-of-type { margin-bottom: 0; }
-  .texte-para strong {
-    color: var(--gold);
-    font-weight: 800;
-  }
-  .texte-highlight {
-    background: rgba(30,136,229,0.12);
-    border-left: 3px solid var(--surf);
-    border-radius: 0 10px 10px 0;
-    padding: 14px 18px;
-    margin: 20px 0;
-    color: #e3f2fd;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.7;
-    font-style: italic;
-  }
+  /* Bilan final */
+  .bilan{display:none;margin-top:40px;background:rgba(255,255,255,.05);border:1px solid rgba(255,213,79,.3);border-radius:24px;padding:36px 28px;text-align:center;animation:fadeUp .5s ease}
+  .bilan.visible{display:block}
+  .bilan .big-emoji{font-size:4rem;margin-bottom:12px}
+  .bilan h3{font-family:'Baloo 2',cursive;font-size:1.9rem;font-weight:800;color:#a5d6a7;margin-bottom:8px}
+  .bilan .nom-eleve{color:var(--gold);font-size:1.1rem;font-weight:700;margin-bottom:20px}
+  .score-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  .score-item{background:rgba(255,255,255,.06);border-radius:14px;padding:16px;text-align:center}
+  .score-item .si-label{font-size:.75rem;font-weight:700;color:#90caf9;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+  .score-item .si-value{font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:#fff}
+  .score-item .si-value span{font-size:1rem;color:#90caf9}
+  .bilan-note{margin-top:16px;font-size:1rem;font-weight:700;color:#cde6ff}
+  .sent-confirm{margin-top:16px;font-size:.85rem;color:#90caf9;font-weight:600}
 </style>
 </head>
 <body>
@@ -491,7 +176,6 @@
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
   <div class="bubble"></div><div class="bubble"></div>
 </div>
-
 <div class="fish-deco f1">🐠</div>
 <div class="fish-deco f2">🐟</div>
 <div class="fish-deco f3">🐡</div>
@@ -500,250 +184,446 @@
 
   <!-- Header -->
   <div class="header">
-    <div class="badge">📚 Fiche de compréhension</div>
+    <div class="badge">📝 Examen de français</div>
     <h1>🌊 La Pollution<br><span>des Océans</span></h1>
-    <p>Lis bien le texte, puis réponds aux questions !</p>
+    <p>Lis le texte attentivement, puis réponds à toutes les questions.</p>
   </div>
 
-  <!-- Texte descriptif -->
+  <!-- Clé API (enseignant) -->
+  <div class="config-card">
+    <div class="cc-title">🔑 Clé API Anthropic</div>
+    <div class="cc-sub">Requis pour la correction automatique par IA. Obtiens ta clé sur <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></div>
+    <div class="apikey-wrap">
+      <input id="apiKeyInput" class="apikey-input" type="password" placeholder="sk-ant-api03-…" autocomplete="off" oninput="validerCle()">
+      <button class="toggle-key-btn" onclick="toggleKeyVisibility()">👁 Afficher</button>
+    </div>
+    <div class="key-status" id="keyStatus"></div>
+  </div>
+
+  <!-- Nom élève -->
+  <div class="student-card">
+    <div class="sc-title">👤 Informations de l'élève</div>
+    <div class="student-fields">
+      <div class="field-group">
+        <label for="nomEleve">Nom et prénom</label>
+        <input id="nomEleve" class="field-input" type="text" placeholder="ex : Marie Tremblay" autocomplete="off">
+      </div>
+      <div class="field-group">
+        <label for="classeEleve">Classe / Groupe</label>
+        <input id="classeEleve" class="field-input" type="text" placeholder="ex : 5A" autocomplete="off">
+      </div>
+    </div>
+  </div>
+
+  <!-- Texte -->
   <div class="texte-section">
     <div class="texte-badge">📖 Texte à lire</div>
     <h2>🌊 La Pollution <span>des Océans</span></h2>
-
     <p class="texte-para">Les océans couvrent plus de la moitié de notre planète. Ils sont le foyer de millions d'animaux magnifiques : des dauphins, des tortues, des baleines, des poissons colorés et bien d'autres créatures fascinantes. Mais aujourd'hui, ces immenses étendues d'eau bleue sont en grand danger.</p>
-
     <p class="texte-para">Chaque année, des millions de tonnes de déchets sont jetées dans les mers et les océans. On y trouve surtout des <strong>bouteilles en plastique</strong>, des sacs, des emballages et des filets de pêche abandonnés. Ces déchets ne disparaissent pas : ils flottent pendant des centaines d'années et se brisent en tout petits morceaux appelés <strong>microplastiques</strong>. Ces minuscules fragments sont avalés par les poissons et les oiseaux de mer, qui les confondent avec de la nourriture. Cela les rend malades et peut même les tuer.</p>
-
     <p class="texte-para">Les usines et les bateaux rejettent aussi des produits chimiques et du <strong>pétrole</strong> dans l'eau. Ces substances forment de grandes taches noires et grasses à la surface de l'océan. Elles étouffent les oiseaux marins et collent aux plumes des manchots et des mouettes, les empêchant de voler et de nager.</p>
-
     <p class="texte-para">Les coraux, eux, souffrent d'un autre problème : le <strong>réchauffement climatique</strong> réchauffe l'eau des océans, ce qui provoque leur décoloration et leur mort. Or, les récifs coralliens sont comme des forêts sous-marines : des milliers d'espèces y vivent et s'y nourrissent.</p>
-
     <p class="texte-para">Heureusement, il existe des solutions ! Des associations et des enfants du monde entier organisent des <strong>nettoyages de plages</strong>. Des scientifiques inventent des machines pour ramasser les plastiques en mer. Et chacun d'entre nous peut agir au quotidien : utiliser moins de plastique, ne jamais jeter ses déchets dans la nature et sensibiliser son entourage.</p>
-
     <div class="texte-highlight">🐢 Les océans nous ont tout donné : l'oxygène que nous respirons, la pluie qui arrose nos terres, la nourriture dans nos assiettes. Il est temps de les protéger à notre tour.</div>
   </div>
 
-  <!-- Section 1: QCM -->
-  <div class="section-label" style="animation-delay:0.2s">
+  <!-- PARTIE 1 : QCM -->
+  <div class="section-label">
     <div class="icon">🔵</div>
-    <div>
-      <h2>Partie 1 — Questions à choix multiple</h2>
-    </div>
+    <div><h2>Partie 1 — Questions à choix multiple</h2></div>
   </div>
   <div class="divider"></div>
 
-  <!-- QCM 1 -->
   <div class="question-card" id="qcm1">
     <div class="q-number">Question 1 / 4</div>
     <div class="q-text">Quel type de déchet retrouve-t-on le plus souvent dans les océans ?</div>
     <div class="options">
-      <button class="option-btn" onclick="chooseOption(this, 'qcm1', false)"><span class="letter">A</span> Du verre et du métal</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm1', true)"><span class="letter">B</span> Des plastiques (bouteilles, sacs, emballages…)</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm1', false)"><span class="letter">C</span> Des restes de nourriture</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm1', false)"><span class="letter">D</span> Du papier et du carton</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm1','A',false)"><span class="letter">A</span> Du verre et du métal</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm1','B',true)"><span class="letter">B</span> Des plastiques (bouteilles, sacs, emballages…)</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm1','C',false)"><span class="letter">C</span> Des restes de nourriture</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm1','D',false)"><span class="letter">D</span> Du papier et du carton</button>
     </div>
   </div>
 
-  <!-- QCM 2 -->
   <div class="question-card" id="qcm2">
     <div class="q-number">Question 2 / 4</div>
     <div class="q-text">Que sont les « microplastiques » ?</div>
     <div class="options">
-      <button class="option-btn" onclick="chooseOption(this, 'qcm2', false)"><span class="letter">A</span> De gros morceaux de plastique visibles sur les plages</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm2', false)"><span class="letter">B</span> Des plastiques recyclés en petites bouteilles</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm2', true)"><span class="letter">C</span> De tout petits fragments de plastique issus de la dégradation des déchets</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm2', false)"><span class="letter">D</span> Des algues microscopiques polluées</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm2','A',false)"><span class="letter">A</span> De gros morceaux de plastique visibles sur les plages</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm2','B',false)"><span class="letter">B</span> Des plastiques recyclés en petites bouteilles</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm2','C',true)"><span class="letter">C</span> De tout petits fragments de plastique issus de la dégradation des déchets</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm2','D',false)"><span class="letter">D</span> Des algues microscopiques polluées</button>
     </div>
   </div>
 
-  <!-- QCM 3 -->
   <div class="question-card" id="qcm3">
     <div class="q-number">Question 3 / 4</div>
     <div class="q-text">Pourquoi les récifs coralliens sont-ils comparés à des « forêts sous-marines » ?</div>
     <div class="options">
-      <button class="option-btn" onclick="chooseOption(this, 'qcm3', false)"><span class="letter">A</span> Parce qu'ils sont grands et très anciens</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm3', true)"><span class="letter">B</span> Parce que des milliers d'espèces y vivent et s'y nourrissent</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm3', false)"><span class="letter">C</span> Parce qu'ils absorbent le CO₂ comme les arbres</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm3', false)"><span class="letter">D</span> Parce qu'ils sont verts et colorés</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm3','A',false)"><span class="letter">A</span> Parce qu'ils sont grands et très anciens</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm3','B',true)"><span class="letter">B</span> Parce que des milliers d'espèces y vivent et s'y nourrissent</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm3','C',false)"><span class="letter">C</span> Parce qu'ils absorbent le CO₂ comme les arbres</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm3','D',false)"><span class="letter">D</span> Parce qu'ils sont verts et colorés</button>
     </div>
   </div>
 
-  <!-- QCM 4 -->
   <div class="question-card" id="qcm4">
     <div class="q-number">Question 4 / 4</div>
     <div class="q-text">Quelle est UNE des solutions mentionnées dans le texte pour aider les océans ?</div>
     <div class="options">
-      <button class="option-btn" onclick="chooseOption(this, 'qcm4', false)"><span class="letter">A</span> Interdire complètement la pêche dans le monde</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm4', false)"><span class="letter">B</span> Construire de grands murs pour retenir les déchets</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm4', true)"><span class="letter">C</span> Organiser des nettoyages de plages et utiliser moins de plastique</button>
-      <button class="option-btn" onclick="chooseOption(this, 'qcm4', false)"><span class="letter">D</span> Déverser des produits chimiques pour neutraliser la pollution</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm4','A',false)"><span class="letter">A</span> Interdire complètement la pêche dans le monde</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm4','B',false)"><span class="letter">B</span> Construire de grands murs pour retenir les déchets</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm4','C',true)"><span class="letter">C</span> Organiser des nettoyages de plages et utiliser moins de plastique</button>
+      <button class="option-btn" onclick="selectOption(this,'qcm4','D',false)"><span class="letter">D</span> Déverser des produits chimiques pour neutraliser la pollution</button>
     </div>
   </div>
 
-  <!-- Section 2: Questions ouvertes -->
-  <div class="section-label" style="animation-delay:0.4s; margin-top: 48px;">
+  <!-- PARTIE 2 : Questions ouvertes -->
+  <div class="section-label" style="margin-top:48px">
     <div class="icon">✏️</div>
-    <div>
-      <h2>Partie 2 — Questions ouvertes</h2>
-    </div>
+    <div><h2>Partie 2 — Questions ouvertes <span style="color:#90caf9;font-size:.85rem;font-weight:600;text-transform:none;letter-spacing:0">(corrigées par IA 🤖)</span></h2></div>
   </div>
   <div class="divider"></div>
 
-  <!-- Open 1 -->
-  <div class="question-card">
+  <div class="question-card" id="card5">
     <div class="q-number">Question 5</div>
     <div class="q-text">Comment le pétrole et les produits chimiques nuisent-ils aux oiseaux marins ? Explique avec tes propres mots.</div>
     <div class="answer-area">
       <div class="answer-label">✍️ Ma réponse</div>
-      <textarea class="answer-textarea" placeholder="Écris ta réponse ici…"></textarea>
+      <textarea id="rep5" class="answer-textarea" placeholder="Écris ta réponse ici…"></textarea>
     </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">💡 Voir la réponse modèle</button>
-    <div class="model-answer">
-      <strong>Réponse modèle :</strong> Les déversements de pétrole forment des taches grasses sur l'eau. Ces substances collent aux plumes des oiseaux (comme les manchots et les mouettes), ce qui les empêche de voler et de nager correctement.
-    </div>
+    <div class="ai-loading" id="load5"><div class="spinner"></div> L'IA corrige ta réponse…</div>
+    <div class="ai-correction" id="corr5"></div>
   </div>
 
-  <!-- Open 2 -->
-  <div class="question-card">
+  <div class="question-card" id="card6">
     <div class="q-number">Question 6</div>
     <div class="q-text">Pourquoi dit-on que les océans nous ont « tout donné » ? Cite au moins deux exemples tirés du texte.</div>
     <div class="answer-area">
       <div class="answer-label">✍️ Ma réponse</div>
-      <textarea class="answer-textarea" placeholder="Écris ta réponse ici…"></textarea>
+      <textarea id="rep6" class="answer-textarea" placeholder="Écris ta réponse ici…"></textarea>
     </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">💡 Voir la réponse modèle</button>
-    <div class="model-answer">
-      <strong>Réponse modèle :</strong> Les océans nous fournissent l'oxygène que nous respirons, la pluie qui arrose les terres agricoles, et la nourriture que nous mangeons. Ils sont donc essentiels à notre survie.
-    </div>
+    <div class="ai-loading" id="load6"><div class="spinner"></div> L'IA corrige ta réponse…</div>
+    <div class="ai-correction" id="corr6"></div>
   </div>
 
-  <!-- Open 3 -->
-  <div class="question-card">
+  <div class="question-card" id="card7">
     <div class="q-number">Question 7</div>
     <div class="q-text">Selon toi, pourquoi est-il important que les enfants apprennent ce genre de problème à l'école ? Donne ton avis en 2 ou 3 phrases.</div>
     <div class="answer-area">
       <div class="answer-label">✍️ Ma réponse</div>
-      <textarea class="answer-textarea" placeholder="Écris ton avis ici…"></textarea>
+      <textarea id="rep7" class="answer-textarea" placeholder="Écris ton avis ici…"></textarea>
     </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">💡 Voir une piste de réponse</button>
-    <div class="model-answer">
-      <strong>Piste de réponse :</strong> Les enfants d'aujourd'hui sont les adultes de demain. En comprenant les dangers de la pollution, ils peuvent changer leurs habitudes (moins de plastique, tri des déchets) et sensibiliser leur famille. De plus, certains deviendront peut-être les scientifiques qui trouveront des solutions !
-    </div>
+    <div class="ai-loading" id="load7"><div class="spinner"></div> L'IA corrige ta réponse…</div>
+    <div class="ai-correction" id="corr7"></div>
   </div>
 
-  <!-- Section 3: Vrai/Faux -->
-  <div class="section-label" style="animation-delay:0.5s; margin-top: 48px;">
+  <!-- PARTIE 3 : Vrai / Faux -->
+  <div class="section-label" style="margin-top:48px">
     <div class="icon">✅</div>
-    <div>
-      <h2>Partie 3 — Vrai ou Faux ?</h2>
-    </div>
+    <div><h2>Partie 3 — Vrai ou Faux ?</h2></div>
   </div>
   <div class="divider"></div>
 
-  <!-- VF 1 -->
   <div class="question-card" id="vf1">
     <div class="q-number">Question 8</div>
     <div class="q-text">« Les plastiques jetés dans l'océan disparaissent rapidement car ils se dissolvent dans l'eau salée. »</div>
     <div class="options">
-      <button class="option-btn" onclick="chooseOption(this, 'vf1', false)"><span class="letter">✓</span> Vrai</button>
-      <button class="option-btn" onclick="chooseOption(this, 'vf1', true)"><span class="letter">✗</span> Faux</button>
+      <button class="option-btn" onclick="selectOption(this,'vf1','Vrai',false)"><span class="letter">✓</span> Vrai</button>
+      <button class="option-btn" onclick="selectOption(this,'vf1','Faux',true)"><span class="letter">✗</span> Faux</button>
     </div>
-    <div class="model-answer" id="vf1-explain" style="display:none; margin-top:10px;">
-      <strong>Explication :</strong> FAUX — Au contraire, les plastiques peuvent flotter pendant des centaines d'années. Ils se brisent en microplastiques mais ne disparaissent pas vraiment.
-    </div>
+    <div class="vf-exp" id="vf1-exp"><strong>Explication :</strong> FAUX — Les plastiques peuvent flotter pendant des centaines d'années et se brisent en microplastiques, ils ne disparaissent pas.</div>
   </div>
 
-  <!-- VF 2 -->
   <div class="question-card" id="vf2">
     <div class="q-number">Question 9</div>
     <div class="q-text">« Le réchauffement climatique provoque la décoloration et la mort des récifs coralliens. »</div>
     <div class="options">
-      <button class="option-btn" onclick="chooseOption(this, 'vf2', true)"><span class="letter">✓</span> Vrai</button>
-      <button class="option-btn" onclick="chooseOption(this, 'vf2', false)"><span class="letter">✗</span> Faux</button>
+      <button class="option-btn" onclick="selectOption(this,'vf2','Vrai',true)"><span class="letter">✓</span> Vrai</button>
+      <button class="option-btn" onclick="selectOption(this,'vf2','Faux',false)"><span class="letter">✗</span> Faux</button>
     </div>
-    <div class="model-answer" id="vf2-explain" style="display:none; margin-top:10px;">
-      <strong>Explication :</strong> VRAI — Le texte le mentionne clairement : la hausse de la température de l'eau due au réchauffement climatique détruit les coraux.
-    </div>
+    <div class="vf-exp" id="vf2-exp"><strong>Explication :</strong> VRAI — La hausse de la température de l'eau détruit les coraux.</div>
   </div>
 
-  <!-- VF 3 -->
   <div class="question-card" id="vf3">
     <div class="q-number">Question 10</div>
     <div class="q-text">« Des scientifiques travaillent déjà sur des machines capables de ramasser les plastiques en mer. »</div>
     <div class="options">
-      <button class="option-btn" onclick="chooseOption(this, 'vf3', true)"><span class="letter">✓</span> Vrai</button>
-      <button class="option-btn" onclick="chooseOption(this, 'vf3', false)"><span class="letter">✗</span> Faux</button>
+      <button class="option-btn" onclick="selectOption(this,'vf3','Vrai',true)"><span class="letter">✓</span> Vrai</button>
+      <button class="option-btn" onclick="selectOption(this,'vf3','Faux',false)"><span class="letter">✗</span> Faux</button>
     </div>
-    <div class="model-answer" id="vf3-explain" style="display:none; margin-top:10px;">
-      <strong>Explication :</strong> VRAI — Le texte dit bien que des scientifiques inventent des machines pour ramasser les plastiques en mer, dans la partie « solutions ».
-    </div>
+    <div class="vf-exp" id="vf3-exp"><strong>Explication :</strong> VRAI — Le texte mentionne que des scientifiques inventent des machines pour ramasser les plastiques en mer.</div>
   </div>
 
-  <!-- Score -->
-  <button class="final-btn" onclick="showScore()">🏆 Voir mon score QCM / Vrai-Faux</button>
+  <!-- Zone soumission -->
+  <div class="submit-zone">
+    <p>📬 Quand tu as terminé toutes les questions, clique pour envoyer ton examen. L'IA va corriger tes réponses ouvertes instantanément !</p>
+    <button class="submit-btn" id="submitBtn" onclick="soumettre()">✅ Soumettre mon examen</button>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
 
-  <div class="score-box" id="scoreBox">
-    <div class="score-emoji" id="scoreEmoji">🌊</div>
-    <h3 id="scoreTitle">Résultat</h3>
-    <p id="scoreText">—</p>
+  <!-- Bilan final -->
+  <div class="bilan" id="bilan">
+    <div class="big-emoji" id="bilanEmoji">🎉</div>
+    <h3 id="bilanTitle">Examen terminé !</h3>
+    <div class="nom-eleve" id="bilanNom">—</div>
+    <div class="score-grid">
+      <div class="score-item">
+        <div class="si-label">QCM + Vrai/Faux</div>
+        <div class="si-value" id="scoreQcm">— <span>/ 7</span></div>
+      </div>
+      <div class="score-item">
+        <div class="si-label">Questions ouvertes (IA)</div>
+        <div class="si-value" id="scoreOuvert">— <span>/ 6</span></div>
+      </div>
+    </div>
+    <div class="bilan-note" id="bilanNote">—</div>
+    <div class="sent-confirm" id="sentConfirm"></div>
   </div>
 
 </div>
 
 <script>
-  const state = {};
+// ── CONFIG ────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = 'COLLE_ICI_TON_URL_APPS_SCRIPT';
+// ─────────────────────────────────────────────────────────────
 
-  function chooseOption(btn, qid, isCorrect) {
-    if (state[qid]) return; // already answered
-    state[qid] = isCorrect ? 'correct' : 'wrong';
+function validerCle() {
+  const val = document.getElementById('apiKeyInput').value.trim();
+  const st  = document.getElementById('keyStatus');
+  if (!val) { st.className = 'key-status'; return; }
+  if (val.startsWith('sk-ant-')) {
+    st.className = 'key-status ok';
+    st.textContent = '✅ Clé détectée — la correction IA est activée';
+  } else {
+    st.className = 'key-status err';
+    st.textContent = '⚠️ Format invalide. La clé doit commencer par sk-ant-…';
+  }
+}
 
-    const card = document.getElementById(qid);
-    const btns = card.querySelectorAll('.option-btn');
+function toggleKeyVisibility() {
+  const input = document.getElementById('apiKeyInput');
+  const btn   = document.querySelector('.toggle-key-btn');
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈 Masquer';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁 Afficher';
+  }
+}
 
-    btns.forEach(b => {
-      b.disabled = true;
-      const bCorrect = b.getAttribute('onclick').includes('true');
-      if (bCorrect) b.classList.add('correct-answer');
+const answers   = {};
+let   submitted = false;
+const aiScores  = {}; // {5: 2, 6: 1, 7: 2}
+
+function selectOption(btn, qid, val, isCorrect) {
+  if (submitted) return;
+  document.getElementById(qid).querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qid] = { val, correct: isCorrect };
+}
+
+// ── CORRECTION IA D'UNE QUESTION OUVERTE ─────────────────────
+async function corrigerParIA(num, question, reponse, reponseAttendue) {
+  const load = document.getElementById('load' + num);
+  const corr = document.getElementById('corr' + num);
+  load.classList.add('visible');
+
+  const prompt = `Tu es un enseignant de français pour des élèves de 5e année primaire (environ 10-11 ans). Tu dois corriger la réponse d'un élève à une question de compréhension de texte.
+
+Question posée : "${question}"
+
+Réponse attendue (critères) : "${reponseAttendue}"
+
+Réponse de l'élève : "${reponse || '(aucune réponse)'}"
+
+Évalue la réponse et retourne UNIQUEMENT un objet JSON valide avec ces champs :
+{
+  "note": <0, 1 ou 2>,
+  "emoji": <"✅" si note=2, "🟡" si note=1, "❌" si note=0>,
+  "label": <"Excellent !" si 2, "Partiellement correct" si 1, "À revoir" si 0>,
+  "commentaire": <une phrase courte et encourageante adaptée à un enfant de 10 ans>,
+  "reponse_modele": <la réponse idéale en une ou deux phrases simples>
+}
+
+Barème : 2 = réponse complète et correcte, 1 = réponse partiellement correcte ou incomplète, 0 = réponse incorrecte ou absente.`;
+
+  try {
+    const apiKey = document.getElementById('apiKeyInput').value.trim();
+    const res  = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model:      'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        messages:   [{ role: 'user', content: prompt }]
+      })
     });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '{}';
+    const clean = text.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(clean);
 
-    if (!isCorrect) btn.classList.add('wrong-answer');
+    aiScores[num] = result.note || 0;
 
-    // show explanation for VF
-    const explain = document.getElementById(qid + '-explain');
-    if (explain) explain.style.display = 'block';
+    const noteClass = result.note === 2 ? 'note-2' : result.note === 1 ? 'note-1' : 'note-0';
+    corr.className  = 'ai-correction ' + noteClass;
+    corr.innerHTML  = `
+      <div class="ai-header">🤖 Correction IA — ${result.emoji} ${result.label}</div>
+      <div class="ai-body">
+        <div class="note-badge">${result.note} / 2</div>
+        <div style="margin-bottom:8px">${result.commentaire}</div>
+        <div style="opacity:.8;font-size:.87rem"><strong>Réponse idéale :</strong> ${result.reponse_modele}</div>
+      </div>`;
+    corr.classList.add('visible');
+  } catch (err) {
+    aiScores[num] = 0;
+    corr.className = 'ai-correction note-1';
+    corr.innerHTML = `<div class="ai-header">🤖 Correction IA</div><div class="ai-body">La correction automatique n'est pas disponible pour le moment.</div>`;
+    corr.classList.add('visible');
   }
+  load.classList.remove('visible');
+}
 
-  function toggleAnswer(btn) {
-    const answer = btn.nextElementSibling;
-    if (answer.classList.contains('visible')) {
-      answer.classList.remove('visible');
-      btn.textContent = '💡 Voir la réponse modèle';
-    } else {
-      answer.classList.add('visible');
-      btn.textContent = '🙈 Masquer la réponse';
+// ── SOUMISSION ────────────────────────────────────────────────
+async function soumettre() {
+  if (submitted) return;
+
+  const nom    = document.getElementById('nomEleve').value.trim();
+  const classe = document.getElementById('classeEleve').value.trim();
+  const err    = document.getElementById('errorMsg');
+
+  if (!nom) {
+    err.textContent = '⚠️ Merci d\'écrire ton nom et prénom avant de soumettre.';
+    err.classList.add('visible');
+    document.getElementById('nomEleve').focus();
+    return;
+  }
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  if (!apiKey || !apiKey.startsWith('sk-ant-')) {
+    err.textContent = '⚠️ Une clé API Anthropic valide est requise pour la correction automatique (commence par sk-ant-…).';
+    err.classList.add('visible');
+    document.getElementById('apiKeyInput').focus();
+    return;
+  }
+  const qcmIds    = ['qcm1','qcm2','qcm3','qcm4','vf1','vf2','vf3'];
+  const unanswered = qcmIds.filter(id => !answers[id]);
+  if (unanswered.length) {
+    err.textContent = '⚠️ Tu n\'as pas répondu à toutes les questions à choix. Vérifie tes réponses !';
+    err.classList.add('visible');
+    document.getElementById(unanswered[0]).scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  err.classList.remove('visible');
+  submitted = true;
+
+  // Désactiver le bouton
+  const btn = document.getElementById('submitBtn');
+  btn.disabled   = true;
+  btn.textContent = '⏳ Correction en cours…';
+
+  // Verrouiller les textareas et les options
+  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  document.querySelectorAll('.answer-textarea').forEach(t => t.disabled = true);
+
+  // Afficher corrections QCM / VF
+  qcmIds.forEach(id => {
+    const card = document.getElementById(id);
+    card.querySelectorAll('.option-btn').forEach(b => {
+      const correct = b.getAttribute('onclick').includes(',true)');
+      if (correct) b.classList.add('correct-answer');
+    });
+    if (answers[id] && !answers[id].correct) {
+      card.querySelectorAll('.selected').forEach(b => b.classList.add('wrong-answer'));
     }
+    const exp = document.getElementById(id + '-exp');
+    if (exp) exp.classList.add('visible');
+  });
+
+  // Lancer la correction IA des 3 questions ouvertes en parallèle
+  const rep5 = document.getElementById('rep5').value.trim();
+  const rep6 = document.getElementById('rep6').value.trim();
+  const rep7 = document.getElementById('rep7').value.trim();
+
+  await Promise.all([
+    corrigerParIA(5,
+      'Comment le pétrole et les produits chimiques nuisent-ils aux oiseaux marins ?',
+      rep5,
+      'Le pétrole forme des taches grasses qui collent aux plumes des oiseaux marins (manchots, mouettes), les empêchant de voler et de nager.'),
+    corrigerParIA(6,
+      'Pourquoi dit-on que les océans nous ont « tout donné » ? Cite au moins deux exemples.',
+      rep6,
+      'Les océans fournissent l\'oxygène que nous respirons, la pluie qui arrose les terres et la nourriture que nous mangeons.'),
+    corrigerParIA(7,
+      'Pourquoi est-il important que les enfants apprennent ce genre de problème à l\'école ?',
+      rep7,
+      'Les enfants sont les adultes de demain. En apprenant ces problèmes, ils peuvent changer leurs habitudes et sensibiliser leur entourage pour protéger les océans.')
+  ]);
+
+  // Calcul scores
+  const scoreQcm    = qcmIds.filter(id => answers[id]?.correct).length;
+  const scoreOuvert = (aiScores[5] || 0) + (aiScores[6] || 0) + (aiScores[7] || 0);
+  const total       = scoreQcm + scoreOuvert;
+  const maxTotal    = 13;
+
+  // Afficher le bilan
+  const pct   = total / maxTotal;
+  const emoji = pct === 1 ? '🏆' : pct >= .7 ? '⭐' : pct >= .5 ? '🌊' : '📚';
+  const title = pct === 1 ? 'Résultat parfait !' : pct >= .7 ? 'Très bien !' : pct >= .5 ? 'Bien essayé !' : 'Continue tes efforts !';
+  document.getElementById('bilanEmoji').textContent     = emoji;
+  document.getElementById('bilanTitle').textContent     = title;
+  document.getElementById('bilanNom').innerHTML         = `👤 <strong>${nom}</strong>${classe ? ' — Classe ' + classe : ''}`;
+  document.getElementById('scoreQcm').innerHTML         = `${scoreQcm} <span>/ 7</span>`;
+  document.getElementById('scoreOuvert').innerHTML      = `${scoreOuvert} <span>/ 6</span>`;
+  document.getElementById('bilanNote').textContent      = `Score total : ${total} / ${maxTotal}`;
+  document.getElementById('bilan').classList.add('visible');
+  document.getElementById('bilan').scrollIntoView({ behavior:'smooth', block:'center' });
+
+  // Envoi vers Google Sheets
+  const payload = {
+    nom, classe,
+    date:         new Date().toLocaleString('fr-CA'),
+    q1:           answers.qcm1?.val || '',
+    q2:           answers.qcm2?.val || '',
+    q3:           answers.qcm3?.val || '',
+    q4:           answers.qcm4?.val || '',
+    q5_ouvert:    rep5,
+    q5_note_ia:   aiScores[5] + '/2',
+    q6_ouvert:    rep6,
+    q6_note_ia:   aiScores[6] + '/2',
+    q7_ouvert:    rep7,
+    q7_note_ia:   aiScores[7] + '/2',
+    q8:           answers.vf1?.val || '',
+    q9:           answers.vf2?.val || '',
+    q10:          answers.vf3?.val || '',
+    score_qcm:    scoreQcm + '/7',
+    score_ouvert: scoreOuvert + '/6',
+    score_total:  total + '/13'
+  };
+
+  if (APPS_SCRIPT_URL !== 'COLLE_ICI_TON_URL_APPS_SCRIPT') {
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById('sentConfirm').textContent = '📬 Réponses envoyées à l\'enseignant(e) avec succès !';
+    } catch {
+      document.getElementById('sentConfirm').textContent = '⚠️ Envoi vers Google Sheets échoué.';
+    }
+  } else {
+    document.getElementById('sentConfirm').textContent = '(Mode démo — connecte le Google Apps Script pour l\'envoi réel)';
   }
 
-  function showScore() {
-    const ids = ['qcm1','qcm2','qcm3','qcm4','vf1','vf2','vf3'];
-    let correct = 0, total = ids.length;
-    ids.forEach(id => { if (state[id] === 'correct') correct++; });
-
-    const box = document.getElementById('scoreBox');
-    const emoji = document.getElementById('scoreEmoji');
-    const title = document.getElementById('scoreTitle');
-    const text  = document.getElementById('scoreText');
-
-    const pct = correct / total;
-    if (pct === 1)      { emoji.textContent='🏆'; title.textContent='Excellent !'; }
-    else if (pct >= .7) { emoji.textContent='⭐'; title.textContent='Très bien !'; }
-    else if (pct >= .5) { emoji.textContent='🌊'; title.textContent='Bien essayé !'; }
-    else                { emoji.textContent='🐠'; title.textContent='Relis le texte !'; }
-
-    text.textContent = correct + ' bonne(s) réponse(s) sur ' + total + ' questions à choix.';
-    box.classList.add('visible');
-    box.scrollIntoView({ behavior:'smooth', block:'center' });
-  }
+  btn.textContent = '✅ Examen soumis';
+}
 </script>
 </body>
 </html>
