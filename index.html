@@ -48,6 +48,21 @@
   @keyframes fadeDown{from{opacity:0;transform:translateY(-24px)}to{opacity:1;transform:translateY(0)}}
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
+  /* Config API card (enseignant) */
+  .config-card{background:rgba(124,77,255,.08);border:1.5px solid rgba(124,77,255,.35);border-radius:20px;padding:20px 28px;margin-bottom:24px;animation:fadeUp .4s ease both}
+  .config-card .cc-title{font-family:'Baloo 2',cursive;font-size:.95rem;font-weight:800;color:#ce93d8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+  .config-card .cc-sub{font-size:.82rem;color:#b39ddb;font-weight:600;margin-bottom:12px}
+  .config-card .cc-sub a{color:#ce93d8}
+  .apikey-wrap{display:flex;gap:10px;align-items:center}
+  .apikey-input{flex:1;background:rgba(255,255,255,.07);border:1.5px solid rgba(124,77,255,.3);border-radius:10px;padding:10px 14px;color:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;outline:none;transition:border-color .2s;letter-spacing:.04em}
+  .apikey-input::placeholder{color:rgba(179,157,219,.4);letter-spacing:0}
+  .apikey-input:focus{border-color:#ce93d8;background:rgba(124,77,255,.08)}
+  .toggle-key-btn{background:rgba(124,77,255,.2);border:1px solid rgba(124,77,255,.3);color:#ce93d8;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:.85rem;font-weight:700;white-space:nowrap;transition:all .2s}
+  .toggle-key-btn:hover{background:rgba(124,77,255,.3)}
+  .key-status{margin-top:8px;font-size:.8rem;font-weight:700;display:none}
+  .key-status.ok{display:block;color:#a5d6a7}
+  .key-status.err{display:block;color:#ffab91}
+
   /* Student card */
   .student-card{background:rgba(255,213,79,.08);border:1.5px solid rgba(255,213,79,.3);border-radius:20px;padding:24px 28px;margin-bottom:36px;animation:fadeUp .5s ease both}
   .student-card .sc-title{font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
@@ -172,6 +187,17 @@
     <div class="badge">📝 Examen de français</div>
     <h1>🌊 La Pollution<br><span>des Océans</span></h1>
     <p>Lis le texte attentivement, puis réponds à toutes les questions.</p>
+  </div>
+
+  <!-- Clé API (enseignant) -->
+  <div class="config-card">
+    <div class="cc-title">🔑 Clé API Anthropic</div>
+    <div class="cc-sub">Requis pour la correction automatique par IA. Obtiens ta clé sur <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></div>
+    <div class="apikey-wrap">
+      <input id="apiKeyInput" class="apikey-input" type="password" placeholder="sk-ant-api03-…" autocomplete="off" oninput="validerCle()">
+      <button class="toggle-key-btn" onclick="toggleKeyVisibility()">👁 Afficher</button>
+    </div>
+    <div class="key-status" id="keyStatus"></div>
   </div>
 
   <!-- Nom élève -->
@@ -359,8 +385,33 @@
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJ0UMT_IV6im1GjXF-iBKd-lpsIgioKc3fN2BgzFnSo1vMnLvoaYCamGrJWd1AhBkp/exec';
+const APPS_SCRIPT_URL = 'COLLE_ICI_TON_URL_APPS_SCRIPT';
 // ─────────────────────────────────────────────────────────────
+
+function validerCle() {
+  const val = document.getElementById('apiKeyInput').value.trim();
+  const st  = document.getElementById('keyStatus');
+  if (!val) { st.className = 'key-status'; return; }
+  if (val.startsWith('sk-ant-')) {
+    st.className = 'key-status ok';
+    st.textContent = '✅ Clé détectée — la correction IA est activée';
+  } else {
+    st.className = 'key-status err';
+    st.textContent = '⚠️ Format invalide. La clé doit commencer par sk-ant-…';
+  }
+}
+
+function toggleKeyVisibility() {
+  const input = document.getElementById('apiKeyInput');
+  const btn   = document.querySelector('.toggle-key-btn');
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈 Masquer';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁 Afficher';
+  }
+}
 
 const answers   = {};
 let   submitted = false;
@@ -399,9 +450,15 @@ Réponse de l'élève : "${reponse || '(aucune réponse)'}"
 Barème : 2 = réponse complète et correcte, 1 = réponse partiellement correcte ou incomplète, 0 = réponse incorrecte ou absente.`;
 
   try {
+    const apiKey = document.getElementById('apiKeyInput').value.trim();
     const res  = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({
         model:      'claude-sonnet-4-20250514',
         max_tokens: 400,
@@ -446,6 +503,13 @@ async function soumettre() {
     err.textContent = '⚠️ Merci d\'écrire ton nom et prénom avant de soumettre.';
     err.classList.add('visible');
     document.getElementById('nomEleve').focus();
+    return;
+  }
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  if (!apiKey || !apiKey.startsWith('sk-ant-')) {
+    err.textContent = '⚠️ Une clé API Anthropic valide est requise pour la correction automatique (commence par sk-ant-…).';
+    err.classList.add('visible');
+    document.getElementById('apiKeyInput').focus();
     return;
   }
   const qcmIds    = ['qcm1','qcm2','qcm3','qcm4','vf1','vf2','vf3'];
